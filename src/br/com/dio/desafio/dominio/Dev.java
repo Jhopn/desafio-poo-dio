@@ -6,16 +6,21 @@ public class Dev {
     private String nome;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+    private Set<Nota> notas = new LinkedHashSet<>();
+
 
     public void inscreverBootcamp(Bootcamp bootcamp){
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
         bootcamp.getDevsInscritos().add(this);
     }
 
-    public void progredir() {
+    public void progredir(Curso curso) {
         Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
         if(conteudo.isPresent()) {
             this.conteudosConcluidos.add(conteudo.get());
+            Random random = new Random();
+            Double sorteioNota = Math.round(random.nextDouble() * 1000) / 100.0;
+            setNota(curso, sorteioNota);
             this.conteudosInscritos.remove(conteudo.get());
         } else {
             System.err.println("Você não está matriculado em nenhum conteúdo!");
@@ -30,11 +35,6 @@ public class Dev {
             soma += next;
         }
         return soma;
-
-        /*return this.conteudosConcluidos
-                .stream()
-                .mapToDouble(Conteudo::calcularXp)
-                .sum();*/
     }
 
 
@@ -62,6 +62,21 @@ public class Dev {
         this.conteudosConcluidos = conteudosConcluidos;
     }
 
+    
+    public void getNota(Dev dev) {
+        System.out.println(dev.getNome());
+        for (Nota nota : this.notas){
+            System.out.println(nota.getNota());
+            System.out.println(nota.getCurso());
+        }
+    }
+    
+    public void setNota(Curso curso ,double nota) {
+        Nota adicionarNota = new Nota(curso);
+        adicionarNota.setNota(nota);
+        this.notas.add(adicionarNota);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

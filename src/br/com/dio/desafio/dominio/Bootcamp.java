@@ -10,10 +10,9 @@ public class Bootcamp {
     private String nome;
     private String descricao;
     private final LocalDate dataInicial = LocalDate.now();
-    private final LocalDate dataFinal = dataInicial.plusDays(45);
+    private final LocalDate dataFinal = dataInicial.plusDays(200);
     private Set<Dev> devsInscritos = new HashSet<>();
     private Set<Conteudo> conteudos = new LinkedHashSet<>();
-
 
     public String getNome() {
         return nome;
@@ -50,11 +49,11 @@ public class Bootcamp {
     public Set<Conteudo> getConteudos() {
         return conteudos;
     }
-
+    
     public void setConteudos(Set<Conteudo> conteudos) {
         this.conteudos = conteudos;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,4 +66,17 @@ public class Bootcamp {
     public int hashCode() {
         return Objects.hash(nome, descricao, dataInicial, dataFinal, devsInscritos, conteudos);
     }
+
+    public void imprimirDevs(){
+        for(Dev dev : devsInscritos){
+            System.out.println("O dev: " + dev.getNome() + " está participando do Bootcamp!");
+        }
+    }
+
+    public void imprimirNotaDevs(){
+        for (Dev dev: devsInscritos){
+            dev.getNota(dev);
+        }
+    }
+
 }
